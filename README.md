@@ -1,46 +1,22 @@
-# Getting Started with Create React App
+# 1. 동기와 비동기 이해하기
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1.1 API 서버에서 상품 목록 가져오기
 
-## Available Scripts
+- fetch 함수 사용
 
-In the project directory, you can run:
+```js
+fetch("API 주소")
+  .then(response => response.json())
+  .then(data => console.log(data));
+```
 
-### `npm start`
+- Promise
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  - 비동기 작업이 완료, 실패했을 때를 처리하기 위한 객체
+  - 자바스크립트 내장 객체로서 "대기", "이행", "거부"의 상태로 표현할 수 있다.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- fetch 함수가 반환하는 값은 Promise 인스턴스이다.
+- Promise 인스턴스에서 사용할 수 있는 메서드는 then, catch, finally가 있다.
+- 그 중에 then 메서드는 Promise의 상태가 "이행", "거부" 상태가 되었을 때 실행된다.
+- 즉, 비동기 작업이 처리되었을 때 실행된다.
+- 이 때 then 메서드 또한 Promise 인스턴스를 반환하기 때문에 .then(...).then(...) 형식으로 함수를 연결해서 사용할 수 있다.
