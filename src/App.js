@@ -1,16 +1,26 @@
 import { Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import ProductPage from "./pages/ProductPage";
-import ProductCreatePage from "./pages/ProductCreatePage";
+import Layout from "./components/common/Layout";
+import CreatePage from "./pages/CreatePage";
+import ModifyPage from "./pages/ModifyPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import ProductListPage from "./pages/ProductListPage";
+import ProductItemPage from "./pages/ProductItemPage";
+import PurchasePage from "./pages/PurchasePage";
 
-function App() {
+const App = () => {
   return (
-    <Routes>
-      <Route index element={<HomePage />} />
-      <Route path="create" element={<ProductCreatePage />} />
-      <Route path="/:productId" element={<ProductPage />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<ProductListPage />} />
+        <Route path="/product" element={<ProductListPage />} />
+        <Route path="/create" element={<CreatePage />} />
+        <Route path="/product/:productId" element={<ProductItemPage />} />
+        <Route path="/purchase/:productId" element={<PurchasePage />} />
+        <Route path="/modify/:productId" element={<ModifyPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Layout>
   );
-}
+};
 
 export default App;
