@@ -21,3 +21,12 @@ export const deleteProduct = async id => {
     console.log(error);
   }
 };
+
+export const getProductOne = async id => {
+  try {
+    const response = await axios.get(`${API_HOST}/${id}`);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
