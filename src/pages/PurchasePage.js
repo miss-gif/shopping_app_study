@@ -1,10 +1,9 @@
-import React from "react";
 import Purchase from "../components/Purchase";
 
 const PurchasePage = () => {
   return (
     <div>
-      <h1>PurchasePage</h1>
+      <h1>상품 구매하기 페이지입니다.</h1>
       <Purchase />
     </div>
   );

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getProductList } from "../api/productApi";
 import { useNavigate } from "react-router-dom";
 import { API_HOST } from "../api/config";
+import Button from "./common/Button";
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const ProductList = () => {
   }, []);
 
   if (isLoading) {
-    return <h3>상품 목록을 불러오는 중입니다...</h3>;
+    return <h3>상품 목록을 불러오는중입니다...</h3>;
   }
 
   return (
@@ -34,13 +35,11 @@ const ProductList = () => {
           <ul key={item.id}>
             <li
               style={{ cursor: "pointer" }}
-              onClick={() => {
-                navigate(`${API_HOST}/${item.id}`);
-              }}
+              onClick={() => navigate(`${API_HOST}/${item.id}`)}
             >
               {item.name}
             </li>
-            <li>{item.price}</li>
+            <li>{item.price.toLocaleString("KO-kr")}원</li>
             <li>{item.explanation}</li>
           </ul>
         ))}

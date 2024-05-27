@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   deleteProduct,
   getProductOne,
   modifyProduct,
 } from "../api/productModifyApi";
-import styled from "@emotion/styled";
-import Modal from "./common/Modal";
 import useModal from "../hooks/useModal";
+import Button from "./common/Button";
+import Modal from "./common/Modal";
 
 const initState = {
   id: "",
@@ -20,8 +21,7 @@ const Modify = () => {
   const navigate = useNavigate();
 
   const { productId } = useParams();
-
-  // useModal 커스텀 훅 사용하여 모달 상태와 제어 함수 가져오기
+  // useModal 커스텀 훅을 사용하여 모달 상태와 제어 함수 가져오기
   const { isModalOpen, modalMessage, confirmAction, openModal, closeModal } =
     useModal();
 
@@ -41,10 +41,10 @@ const Modify = () => {
       console.log("수정 완료");
       // 수정 완료 후 모달을 띄움
       openModal({
-        message: "수정이 완료되었습니다.",
+        message: "수정이 완료되었습니다!",
         onConfirm: () => {
           closeModal();
-          navigate(`/product//${productId}`);
+          navigate(`/product/${productId}`);
         },
       });
     } catch (error) {
@@ -65,8 +65,9 @@ const Modify = () => {
       onConfirm: async () => {
         try {
           await deleteProduct(productId);
+          console.log("삭제 완료");
           closeModal();
-          navigate(`/product/`);
+          navigate("/product");
         } catch (error) {
           console.log("삭제 중 오류 발생", error);
         }
@@ -105,7 +106,7 @@ const Modify = () => {
   return (
     <div>
       <h2>상품 수정하기</h2>
-      <StyleForm onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete="off">
         <input
           type="text"
           name="name"
@@ -128,11 +129,10 @@ const Modify = () => {
           onChange={e => handleChange(e)}
         />
         <br />
-        <input type="submit" value="상품 수정하기" />
-      </StyleForm>
-      <button type="button" onClick={handleDelete}>
-        상품 삭제하기
-      </button>
+        <Button label="상품 수정하기" />
+      </form>
+      <Button label="상품 삭제하기" onClick={handleDelete} />
+      {/* 모달 관련 */}
       <Modal
         isOpen={isModalOpen}
         message={modalMessage}
@@ -144,10 +144,3 @@ const Modify = () => {
 };
 
 export default Modify;
-
-// 스타일드 컴포넌트
-const StyleForm = styled.form`
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-`;

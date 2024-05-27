@@ -1,10 +1,9 @@
-import React from "react";
 import Modify from "../components/Modify";
 
 const ModifyPage = () => {
   return (
     <div>
-      <h1>ModifyPage</h1>
+      <h1>상품 수정하기 페이지입니다.</h1>
       <Modify />
     </div>
   );

@@ -1,11 +1,10 @@
-import styled from "@emotion/styled";
-import React, { useState } from "react";
-import { createProduct } from "../api/productCreateApi";
-import { API_HOST } from "../api/config";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createProduct } from "../api/productCreateApi";
+import Button from "./common/Button";
 
 const Create = () => {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -14,19 +13,24 @@ const Create = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNameChange = e => {
+    // console.log("상품이름", e.target.value);
     setName(e.target.value);
   };
   const handlePriceChange = e => {
-    setPrice(e.target.value);
+    // console.log("상품가격", e.target.value);
+    setPrice(Number(e.target.value));
   };
   const handleExplanationChange = e => {
+    // console.log("상품설명", e.target.value);
     setExplanation(e.target.value);
   };
 
   const handleCreateProduct = async e => {
     e.preventDefault();
     setIsLoading(true);
+
     const response = await createProduct({ name, price, explanation });
+
     if (response) {
       setIsLoading(false);
       setIsModalOpen(true);
@@ -35,27 +39,27 @@ const Create = () => {
 
   const handleMoveListPage = () => {
     setIsModalOpen(false);
-    navigator(`${API_HOST}`);
-    return console.log("상품 목록페이지로 이동");
+    navigate("/product");
   };
 
   if (isLoading) {
-    return <h3>상품을 등록하는 중입니다.</h3>;
+    return <h3>상품을 등록 하는중입니다...</h3>;
   }
 
   if (isModalOpen) {
     return (
-      <StyleDiv>
+      <div>
         <div>상품을 성공적으로 추가하였습니다.</div>
         <div>확인을 누르면 상품 목록 페이지로 이동합니다.</div>
-        <button onClick={handleMoveListPage}>확인</button>
-      </StyleDiv>
+        <Button onClick={handleMoveListPage}>확인</Button>
+      </div>
     );
   }
+
   return (
     <div>
       <h2>상품 등록하기</h2>
-      <StyledForm onSubmit={handleCreateProduct}>
+      <form onSubmit={handleCreateProduct}>
         <input
           type="text"
           placeholder="상품 이름"
@@ -78,30 +82,10 @@ const Create = () => {
           onChange={handleExplanationChange}
         />
         <br />
-        <input type="submit" value="상품 정보 등록하기" />
-      </StyledForm>
+        <Button label="상품 정보 등록하기" />
+      </form>
     </div>
   );
 };
 
 export default Create;
-
-const StyledForm = styled.form`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyleDiv = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9;
-  width: 100%;
-  height: 100vh;
-  background: #eee;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;

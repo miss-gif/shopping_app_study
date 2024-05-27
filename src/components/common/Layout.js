@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
+import useCart from "../../hooks/useCart";
 
 const Layout = ({ children }) => {
   const navigate = useNavigate();
+  const { carts } = useCart();
 
   const handleMoveHome = () => navigate("/");
   const handleMoveCreate = () => navigate("/create");
+  const handleMoveCart = () => navigate("/cart");
 
   return (
     <>
@@ -14,6 +17,9 @@ const Layout = ({ children }) => {
         </li>
         <li onClick={handleMoveCreate} style={{ cursor: "pointer" }}>
           상품 등록하기
+        </li>
+        <li onClick={handleMoveCart} style={{ cursor: "pointer" }}>
+          장바구니 {carts.length}
         </li>
       </ul>
       <div>{children}</div>

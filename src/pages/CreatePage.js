@@ -1,10 +1,9 @@
-import React from "react";
 import Create from "../components/Create";
 
 const CreatePage = () => {
   return (
     <div>
-      <h1>CreatePage</h1>
+      <h1>상품 등록하기 페이지입니다.</h1>
       <Create />
     </div>
   );

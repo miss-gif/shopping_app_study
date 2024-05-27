@@ -1,10 +1,9 @@
-import React from "react";
 import ProductList from "../components/ProductList";
 
 const ProductListPage = () => {
   return (
     <div>
-      <h1>ProductListPage</h1>
+      <h1>상품 목록 페이지입니다.</h1>
       <ProductList />
     </div>
   );
