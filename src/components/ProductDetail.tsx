@@ -4,15 +4,17 @@ import { getProductOne } from "../api/productItemApi";
 import useCart from "../hooks/useCart";
 import useModal from "../hooks/useModal";
 import Modal from "./common/Modal";
+import Button from "./common/Button";
+import { ProductType } from "../types";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
-  const { productId } = useParams();
+  const { productId } = useParams<{ productId: string }>();
   const { addCarts } = useCart();
   const { isModalOpen, modalMessage, confirmAction, openModal, closeModal } =
     useModal();
 
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<ProductType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleMoveModifyPage = () => {
@@ -69,22 +71,17 @@ const ProductDetail = () => {
       <div>{product.price.toLocaleString("KO-kr")}원</div>
       <div>{product.explanation}</div>
 
-      <button type="button" onClick={handleMoveModifyPage}>
-        상품 수정하기
-      </button>
-      <button type="button" onClick={handleMovePurchasePage}>
-        상품 구매하기
-      </button>
-      <button type="button" onClick={handleCartAdd}>
-        장바구니에 담기
-      </button>
+      <Button label="상품 수정하기" onClick={handleMoveModifyPage} />
+      <Button label="상품 구매하기" onClick={handleMovePurchasePage} />
+      <Button label="장바구니에 담기" onClick={handleCartAdd} />
 
       {/* 모달 관련 */}
       <Modal
         isOpen={isModalOpen}
         message={modalMessage}
         onClose={closeModal}
-        onConfirm={confirmAction}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onConfirm={confirmAction || (() => {})}
       />
     </div>
   );

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createProduct } from "../api/productCreateApi";
 import Button from "./common/Button";
+import { ProductType } from "../types";
 
 const Create = () => {
   const navigate = useNavigate();
@@ -12,24 +13,29 @@ const Create = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleNameChange = e => {
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     // console.log("상품이름", e.target.value);
     setName(e.target.value);
   };
-  const handlePriceChange = e => {
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // console.log("상품가격", e.target.value);
     setPrice(Number(e.target.value));
   };
-  const handleExplanationChange = e => {
+  const handleExplanationChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     // console.log("상품설명", e.target.value);
     setExplanation(e.target.value);
   };
 
-  const handleCreateProduct = async e => {
+  const handleCreateProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const response = await createProduct({ name, price, explanation });
+    const response = await createProduct({ name, price, explanation } as Omit<
+      ProductType,
+      "id"
+    >);
 
     if (response) {
       setIsLoading(false);
@@ -51,7 +57,7 @@ const Create = () => {
       <div>
         <div>상품을 성공적으로 추가하였습니다.</div>
         <div>확인을 누르면 상품 목록 페이지로 이동합니다.</div>
-        <Button onClick={handleMoveListPage}>확인</Button>
+        <Button label="확인" onClick={handleMoveListPage} />
       </div>
     );
   }
@@ -76,7 +82,6 @@ const Create = () => {
         <br />
         <textarea
           rows={4}
-          type="text"
           placeholder="상품 설명"
           value={explanation}
           onChange={handleExplanationChange}
